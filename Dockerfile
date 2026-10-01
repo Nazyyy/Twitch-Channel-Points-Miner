@@ -23,7 +23,7 @@ if [ ! -f /data/config.json ]; then \
     cp /app/config.template.json /data/config.json; \
 fi; \
 sed -i 's/\"auto_update\"[[:space:]]*:[[:space:]]*true/\"auto_update\": false/' /data/config.json; \
-busybox httpd -f -p 0.0.0.0:${PORT:-8080} -h /www >/dev/null 2>&1 & \
+busybox httpd -f -p 0.0.0.0:${PORT:-3000} -h /www >/dev/null 2>&1 & \
 http_pid=$!; \
 miner_pid=''; \
 trap 'kill $miner_pid $http_pid 2>/dev/null || true; exit 0' TERM INT; \
