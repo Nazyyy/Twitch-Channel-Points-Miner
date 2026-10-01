@@ -18,15 +18,11 @@ COPY config.json /app/config.template.json
 RUN mkdir -p /data/cookies /data/log
 
 CMD ["sh", "-c", "\
-echo \"COOKIE ENV LENGTH: ${#TWITCH_COOKIE_B64}\"; \
-mkdir -p /data/cookies; \
+if [ ! -f /data/config.json ]; then \
+    cp /app/config.template.json /data/config.json; \
+fi; \
 if [ -n \"$TWITCH_COOKIE_B64\" ]; then \
     echo \"$TWITCH_COOKIE_B64\" | base64 -d > /data/cookies/Nazy_33.json; \
-    echo \"COOKIE FILE SIZE: $(wc -c < /data/cookies/Nazy_33.json)\"; \
-    echo \"COOKIE FILE: $(test -f /data/cookies/Nazy_33.json && echo EXISTS || echo MISSING)\"; \
-else \
-    echo \"COOKIE ENV: MISSING\"; \
+    chmod 600 /data/cookies/Nazy_33.json; \
 fi; \
-echo \"DATA CONTENT:\"; \
-ls -lah /data/cookies; \
-sleep 10"]
+exec /app/twitch-miner -data-dir /data"]
