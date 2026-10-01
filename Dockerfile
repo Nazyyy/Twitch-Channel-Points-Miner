@@ -15,7 +15,9 @@ WORKDIR /app
 COPY --from=build /app/twitch-miner /app/twitch-miner
 COPY config.json /app/config.template.json
 
-RUN mkdir -p /data/cookies /data/log
+RUN apk add --no-cache ca-certificates tzdata \
+    && update-ca-certificates \
+    && mkdir -p /data/cookies /data/log
 
 CMD ["sh", "-c", "\
 if [ ! -f /data/config.json ]; then \
