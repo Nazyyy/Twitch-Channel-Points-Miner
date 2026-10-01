@@ -1,5 +1,6 @@
 {
   "username": "Nazy_33",
   "password": "",
-  "streamers": []
+  "auto_update": false,
+  "streamers": ["xah0b", "cacto0o"]
 }
